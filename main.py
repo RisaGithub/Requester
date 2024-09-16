@@ -1,13 +1,13 @@
 import requests
 import time
+from flask import Flask
 
-# List of URLs to send GET requests to
+app = Flask(__name__)
+
 urls = [
     "https://contentmaster.onrender.com",
     "https://g4f-api-u0fr.onrender.com",
-    # Add more URLs as needed
 ]
-
 
 def send_get_requests():
     for url in urls:
@@ -20,9 +20,13 @@ def send_get_requests():
         except requests.exceptions.RequestException as e:
             print(f"Error requesting {url}: {e}")
 
+@app.route('/')
+def index():
+    return "Background task running."
 
 if __name__ == "__main__":
     while True:
         send_get_requests()
-        print("Waiting for 10 minutes...")
-        time.sleep(600)  # Wait for 10 minutes (600 seconds)
+        time.sleep(600)  # Wait for 10 minutes
+        # Flask app binding to port
+    app.run(host='0.0.0.0', port=5000)
