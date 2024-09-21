@@ -1,31 +1,26 @@
+import os
+import sys
+import django
+
+# Add the django project directory to the Python path
+sys.path.append(os.path.join(os.path.dirname(__file__), "requester_django"))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "requester_django.settings")
+django.setup()
+
 import flet as ft
-import requests
-import time
-
-# List of URLs to send GET requests to
-urls = [
-    "https://contentmaster.onrender.com",
-    "https://g4f-api-u0fr.onrender.com",
-]
-
-
-def send_get_requests():
-    for url in urls:
-        try:
-            print(f"SEND GET request to {url}")
-            response = requests.get(url)
-            print(
-                f"FINISHED GET request to {url} returned status code: {response.status_code}"
-            )
-        except requests.exceptions.RequestException as e:
-            print(f"Error requesting {url}: {e}")
+from views.home import HomeView
 
 
 def main(page: ft.Page):
-    while True:
-        send_get_requests()
-        print("Waiting for 10 minutes...")
-        time.sleep(600)  # Wait for 10 minutes (600 seconds)
+    def route_changed(e):
+        print(e.route)
+        if e.route == "/":
+            page.views.append(HomeView(page))
+        page.update()
+
+    page.on_route_change = route_changed
+
+    page.go("/")
 
 
 ft.app(target=main)
