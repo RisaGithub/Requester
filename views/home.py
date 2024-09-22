@@ -88,10 +88,10 @@ class HomeView(ft.View):
             req_control = MyContainer(
                 ft.ResponsiveRow(
                     [
-                        MyText(req.sent_at, col=2),
+                        MyText(req.sent_at, col=1.7),
                         MyText(req.url, col=6),
                         MyText(req.request_method, col=2),
-                        MyText(req.http_status_code, col=2),
+                        MyText(req.http_status_code, col=2.3),
                     ]
                 )
             )
