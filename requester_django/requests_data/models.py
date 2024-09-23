@@ -6,6 +6,7 @@ class URL(models.Model):
     is_active = models.BooleanField()
     time_interval = models.TimeField()
     request_method = models.CharField(max_length=10)
+    next_request_time = models.TimeField(auto_now_add=True)
 
 
 class Request(models.Model):
